@@ -53,6 +53,10 @@ function resetValues() {
   localStorage.clear();
 }
 
+function resetGame() {
+  window.location = "../index.html";
+}
+
 function saveAllRoundInputs() {
   protectedMoney = document.getElementById("protectedMoney").value;
   openMoney = document.getElementById("openMoney").value;

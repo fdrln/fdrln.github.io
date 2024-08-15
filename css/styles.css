@@ -249,6 +249,10 @@ body {
   border-right: 2px solid gray;
 }
 
+#resetButton {
+  background-color: rgb(255, 0, 0);
+}
+
 #closeButton {
   color: #aaa;
   float: right;
