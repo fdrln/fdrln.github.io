@@ -309,7 +309,7 @@ body {
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  background: url(/assets/img/paper.jpg) rgba(65, 65, 247, 0.512);
+  background: url(/assets/img/paper.jpg);
   color: black;
   max-width: 30%;
 }
