@@ -337,12 +337,6 @@ body {
     max-width: 40%;
   }
   #startScreen {
-    padding-bottom: 100px;
-  }
-}
-
-@keyframes move {
-  100% {
-    transform: translate3d(0, 0, 1px) rotate(360deg);
+    padding-bottom: 200px;
   }
 }
