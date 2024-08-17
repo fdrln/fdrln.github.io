@@ -69,45 +69,17 @@ function saveAllRoundInputs() {
 
 function calculateSumForPlayerRound() {
   saveAllRoundInputs();
-  let originalOpenMoney = parseInt(openMoney);
-  let deductions = 0;
-  if (hasSoldOut) {
-    deductions += soldOut;
-  }
   if (hasDoubleCrossed) {
-    deductions += doubleCrossed;
+    openMoney = parseInt(openMoney) - doubleCrossed;
+  }
+  if (hasSoldOut) {
+    openMoney = parseInt(openMoney) - soldOut;
   }
   if (hasWipedOut) {
-    deductions += wipedOut;
+    openMoney = parseInt(openMoney) - wipedOut;
   }
-  openMoney = originalOpenMoney - deductions;
   roundResult =
     parseInt(openMoney) + parseInt(protectedMoney) - parseInt(highestPeddle);
-  updateBankerBonus(allGameData, roundCount, originalOpenMoney);
-}
-
-function updateBankerBonus(allGameData, currentRound, originalOpenMoney) {
-  const bankerPlayer = allGameData.find(
-    (player) => player.round === currentRound && player.hasBanker
-  );
-  if (bankerPlayer) {
-    const bankerBonus = allGameData.reduce((total, player) => {
-      if (player.round === currentRound && !player.hasBanker) {
-        const bonus = parseFloat(originalOpenMoney) * 0.2;
-        player.roundResult =
-          parseFloat(player.protectedMoney) +
-          (parseFloat(originalOpenMoney) - bonus);
-        player.openMoney = parseFloat(originalOpenMoney) - bonus;
-        player.subtractedFromOpenMoney = bonus;
-        return total + bonus;
-      }
-      return total;
-    }, 0);
-    if (bankerBonus > 0) {
-      bankerPlayer.roundResult += bankerBonus;
-    }
-    localStorage.setItem("allPlayersData", JSON.stringify(allGameData));
-  }
 }
 
 function saveCurrentPlayerRound() {

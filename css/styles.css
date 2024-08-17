@@ -45,6 +45,8 @@ body {
   margin: 10px auto 10px auto;
   display: block;
   text-wrap: auto;
+  background-color: rgba(255, 255, 255, 0.241);
+  color: white;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
