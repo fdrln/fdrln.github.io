@@ -146,20 +146,31 @@ function updateBankerBonus(allGameData, currentRound) {
     (player) => player.round === currentRound && player.hasBanker
   );
   if (bankerPlayer) {
-    const bankerBonus = allGameData.reduce((total, player) => {
-      if (player.round === currentRound && !player.hasBanker) {
-        const originalOpenMoney = parseFloat(player.openMoney);
-        const bonus = parseFloat(player.openMoney) * 0.2;
-        player.roundResult =
-          parseFloat(player.protectedMoney) + (originalOpenMoney - bonus);
-        player.openMoney = originalOpenMoney - bonus;
-        player.subtractedFromOpenMoney = bonus;
-        return total + bonus;
+    allGameData.forEach((player) => {
+      if (player.round === currentRound) {
+        calculateSumForPlayerRound();
+        const sumForPlayerRound = player.roundResult;
+        if (!player.hasBanker) {
+          const originalOpenMoney = parseFloat(player.openMoney);
+          const bonus = parseFloat(player.openMoney) * 0.2;
+          player.roundResult = sumForPlayerRound - bonus;
+          player.openMoney = originalOpenMoney - bonus;
+          player.subtractedFromOpenMoney = bonus;
+        } else {
+          player.roundResult = sumForPlayerRound;
+        }
       }
-      return total;
-    }, 0);
-    if (bankerBonus > 0) {
-      bankerPlayer.roundResult += bankerBonus;
+    });
+    if (bankerPlayer) {
+      const bankerBonus = allGameData.reduce((total, player) => {
+        if (player.round === currentRound && !player.hasBanker) {
+          return total + parseFloat(player.subtractedFromOpenMoney);
+        }
+        return total;
+      }, 0);
+      if (bankerBonus > 0) {
+        bankerPlayer.roundResult += bankerBonus;
+      }
     }
     localStorage.setItem("allPlayersData", JSON.stringify(allGameData));
   }
@@ -213,6 +224,7 @@ function updateGameDataGrid() {
       playerTotals[playerName] = 0;
     }
     playerTotals[playerName] += parseInt(playerData.roundResult);
+    console.log("2", playerTotals[playerName]);
   });
 
   const totalRow = document.createElement("tr");
