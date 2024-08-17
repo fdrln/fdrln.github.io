@@ -69,17 +69,18 @@ function saveAllRoundInputs() {
 
 function calculateSumForPlayerRound() {
   saveAllRoundInputs();
-  if (hasDoubleCrossed) {
-    openMoney = parseInt(openMoney) - doubleCrossed;
-  }
-  if (hasSoldOut) {
-    openMoney = parseInt(openMoney) - soldOut;
-  }
-  if (hasWipedOut) {
-    openMoney = parseInt(openMoney) - wipedOut;
-  }
   roundResult =
     parseInt(openMoney) + parseInt(protectedMoney) - parseInt(highestPeddle);
+
+  if (hasDoubleCrossed) {
+    roundResult -= doubleCrossed;
+  }
+  if (hasSoldOut) {
+    roundResult -= soldOut;
+  }
+  if (hasWipedOut) {
+    roundResult -= wipedOut;
+  }
 }
 
 function saveCurrentPlayerRound() {
